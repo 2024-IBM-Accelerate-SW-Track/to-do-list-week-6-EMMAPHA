@@ -61,6 +61,8 @@ async function addItem (request, response) {
 app.get("/get/items", getItems)
 async function getItems (request, response) {
     //begin here
+    var data = await fsPromises.readFile("database.json");
+    response.json(JSON.parse(data));
 
 };
 
@@ -68,6 +70,10 @@ async function getItems (request, response) {
 app.get("/get/searchitem", searchItems) 
 async function searchItems (request, response) {
     //begin here
+    var searchField = request.query.taskname;
+    var json = JSON.parse (await fsPromises.readFile("database.json"));
+    var returnData = json.filter(jsondata => jsondata.Task === searchField);
+    response.json(returnData);
 
 };
 
